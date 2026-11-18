@@ -13,6 +13,7 @@
             "Story_Talk_Skip",
             "Story_Talk_Advance",
             "Story_Skip_Talk_Confirm",
+            "Story_Interact_F",
             "Story_Msgbox_Confirm",
             "Story_Pack_Skip",
             "Story_Pack_Next",
@@ -378,5 +379,28 @@
             "Story_Start"
         ],
         "focus": "跳过对话-点确认"
+    },
+    "Story_Interact_F": {
+        "desc": "靠近可交互物（采集物/ NPC / 机关）时，角色上方会出现白底黑字的 F 键提示。识别到就发 F 键交互（VK_F=70）。ROI 限定画面中部，避开右上角 F1/F2/F3 那排快捷键；expected 用 ^F$ 精确匹配单个字母，减少误触。",
+        "recognition": "OCR",
+        "roi": [
+            380,
+            260,
+            520,
+            280
+        ],
+        "expected": [
+            "^F$"
+        ],
+        "action": "ClickKey",
+        "key": 70,
+        "pre_delay": 200,
+        "post_delay": 1500,
+        "rate_limit": 2000,
+        "timeout": 2000,
+        "next": [
+            "Story_Start"
+        ],
+        "focus": "交互提示-按F"
     }
 }
