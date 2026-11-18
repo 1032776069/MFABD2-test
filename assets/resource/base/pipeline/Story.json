@@ -1,0 +1,270 @@
+{
+    "Story_Start": {
+        "desc": "任务「[执行]主线剧情自动推进」入口。需要在主线卡带地图内启动。按优先级依次尝试：失联保护 → 战斗结算 → 自动战斗等待 → 剧情对话继续 → 确认弹窗 → 卡带开头跳过 → 手动战斗转自动 → 主线追踪 → 点屏幕中央走位。",
+        "pre_delay": 0,
+        "post_delay": 0,
+        "next": [
+            "Env_AgentLost_Stop",
+            "Story_Result_Victory",
+            "Story_Result_Defeat",
+            "Story_Battle_Auto",
+            "Story_Talk_Next",
+            "Story_Talk_Next_Alt",
+            "Story_Msgbox_Confirm",
+            "Story_Pack_Skip",
+            "Story_Pack_Next",
+            "Story_Battle_ToAuto",
+            "Story_Quest_Tracker",
+            "Story_Idle_Tap"
+        ]
+    },
+    "Story_Result_Victory": {
+        "desc": "战斗结算-胜利，与 AutoBattle 模块共用识别点",
+        "recognition": "OCR",
+        "roi": [
+            847,
+            12,
+            177,
+            86
+        ],
+        "expected": [
+            "VICTORY"
+        ],
+        "timeout": 2000,
+        "next": [
+            "Story_Result_Continue"
+        ],
+        "focus": "主线战斗结果-胜利"
+    },
+    "Story_Result_Defeat": {
+        "desc": "战斗结算-失败，同样需要点掉继续，避免卡在结算页",
+        "recognition": "OCR",
+        "roi": [
+            559,
+            8,
+            515,
+            358
+        ],
+        "expected": [
+            "DEFEAT",
+            "END"
+        ],
+        "timeout": 2000,
+        "next": [
+            "Story_Result_Continue"
+        ],
+        "focus": "主线战斗结果-失利"
+    },
+    "Story_Result_Continue": {
+        "desc": "结算页点画面中部继续。结算页任意位置可点，故用 DirectHit 兜底点击；点完若仍是结算页会再点一次。",
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            640,
+            420,
+            1,
+            1
+        ],
+        "pre_delay": 300,
+        "post_delay": 2500,
+        "timeout": 3000,
+        "next": [
+            "Story_Result_Victory",
+            "Story_Result_Defeat",
+            "Story_Start"
+        ]
+    },
+    "Story_Battle_Auto": {
+        "desc": "自动战斗中：原地等待，直到出现结算。复用 AutoBattle 的「自动战斗中」识别点。",
+        "recognition": "Or",
+        "any_of": [
+            "Rec_<AutoBattle_Is_Auto>_Ocr_01",
+            "Rec_<AutoBattle_Is_Auto>_Ocr_02"
+        ],
+        "post_delay": 4000,
+        "next": [
+            "Story_Result_Victory",
+            "Story_Result_Defeat",
+            "Story_Battle_Auto"
+        ],
+        "focus": "主线自动战斗中..."
+    },
+    "Story_Battle_ToAuto": {
+        "desc": "出现手动战斗界面（BATTLE/TURN 或「更换」），说明自动战斗没开",
+        "recognition": "Or",
+        "any_of": [
+            "Rec_<AutoBattle_TabTo_Auto>_Ocr_01",
+            "Rec_<AutoBattle_TabTo_Auto>_Ocr_02"
+        ],
+        "next": [
+            "Story_Battle_ToAuto_Tpl",
+            "Story_Start"
+        ]
+    },
+    "Story_Battle_ToAuto_Tpl": {
+        "desc": "点顶部自动战斗图标（复用 AutoBattle 的模板）",
+        "recognition": "TemplateMatch",
+        "roi": [
+            712,
+            2,
+            348,
+            81
+        ],
+        "template": [
+            "UI_AutoBattle.png"
+        ],
+        "green_mask": true,
+        "action": "Click",
+        "post_delay": 2000,
+        "next": [
+            "Story_Battle_Auto",
+            "Story_Start"
+        ],
+        "focus": "开启自动战斗"
+    },
+    "Story_Talk_Next": {
+        "desc": "剧情对话气泡右下角的『继续』箭头，点一下推进一句。全屏匹配，箭头出现在哪就点哪。",
+        "recognition": "TemplateMatch",
+        "roi": [
+            0,
+            0,
+            1280,
+            720
+        ],
+        "template": [
+            "Chaga_ProductNext.png"
+        ],
+        "threshold": 0.8,
+        "action": "Click",
+        "pre_delay": 200,
+        "post_delay": 800,
+        "next": [
+            "Story_Talk_Next",
+            "Story_Start"
+        ],
+        "focus": "推进剧情对话"
+    },
+    "Story_Talk_Next_Alt": {
+        "desc": "『继续』按钮的浅色版本（原图为绿底，需 green_mask 抠掉底色）",
+        "recognition": "TemplateMatch",
+        "roi": [
+            0,
+            0,
+            1280,
+            720
+        ],
+        "template": [
+            "UI_talk.png"
+        ],
+        "green_mask": true,
+        "action": "Click",
+        "pre_delay": 200,
+        "post_delay": 800,
+        "next": [
+            "Story_Talk_Next_Alt",
+            "Story_Start"
+        ]
+    },
+    "Story_Msgbox_Confirm": {
+        "desc": "通用确认弹窗：结算确认、卡带提示、剧情分支确认等",
+        "recognition": "OCR",
+        "roi": [
+            400,
+            330,
+            480,
+            200
+        ],
+        "expected": [
+            "确认",
+            "确定"
+        ],
+        "action": "Click",
+        "post_delay": 1500,
+        "next": [
+            "Story_Start"
+        ],
+        "focus": "点掉确认弹窗"
+    },
+    "Story_Pack_Skip": {
+        "desc": "卡带开头/场景转换时右上角的『跳过』（绿底，需 green_mask）",
+        "recognition": "TemplateMatch",
+        "roi": [
+            915,
+            9,
+            265,
+            68
+        ],
+        "template": [
+            "UI_Skip.png"
+        ],
+        "green_mask": true,
+        "action": "Click",
+        "post_delay": 1500,
+        "next": [
+            "Story_Msgbox_Confirm",
+            "Story_Start"
+        ]
+    },
+    "Story_Pack_Next": {
+        "desc": "卡带开头/场景转换时右上角的『下一步』箭头",
+        "recognition": "TemplateMatch",
+        "roi": [
+            915,
+            9,
+            265,
+            68
+        ],
+        "template": [
+            "Chaga_ProductNext.png"
+        ],
+        "action": "Click",
+        "post_delay": 1500,
+        "next": [
+            "Story_Msgbox_Confirm",
+            "Story_Start"
+        ]
+    },
+    "Story_Quest_Tracker": {
+        "desc": "点右侧『主线』任务追踪，尝试触发自动寻路/打开任务面板。rate_limit 拉长，避免一直戳追踪栏。",
+        "recognition": "OCR",
+        "roi": [
+            995,
+            50,
+            285,
+            75
+        ],
+        "expected": [
+            "主线"
+        ],
+        "action": "Click",
+        "post_delay": 1500,
+        "rate_limit": 12000,
+        "timeout": 2000,
+        "next": [
+            "Story_Msgbox_Confirm",
+            "Story_Start"
+        ],
+        "focus": "点主线任务追踪"
+    },
+    "Story_Idle_Tap": {
+        "desc": "兜底动作：点屏幕中央。在卡带地图上走位、推进气泡对话、关掉误开的面板都靠这一下。",
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [
+            640,
+            360,
+            1,
+            1
+        ],
+        "pre_delay": 200,
+        "post_delay": 1200,
+        "next": [
+            "Story_Result_Victory",
+            "Story_Result_Defeat",
+            "Story_Battle_Auto",
+            "Story_Talk_Next",
+            "Story_Msgbox_Confirm",
+            "Story_Idle_Tap"
+        ]
+    }
+}

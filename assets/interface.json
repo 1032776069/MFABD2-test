@@ -17,7 +17,7 @@
             "win32": {
                 "class_regex": "UnityWndClass",
                 "window_regex": "BrownDust II",
-                "screencap": "PrintWindow",
+                "screencap": "Background",
                 "mouse": "PostMessageWithWindowPos",
                 "keyboard": "PostMessageWithWindowPos"
             },
@@ -32,7 +32,7 @@
             "win32": {
                 "class_regex": "UnityWndClass",
                 "window_regex": "BrownDust II",
-                "screencap": "PrintWindow",
+                "screencap": "Background",
                 "mouse": "SendMessageWithCursorPos",
                 "keyboard": "PostMessageWithCursorPos"
             },
@@ -101,6 +101,18 @@
         "启用多存档"
     ],
     "task": [
+        {
+            "name": "[执行]主线剧情自动推进",
+            "label": "[执行]主线剧情自动推进",
+            "entry": "Story_Start",
+            "controller": [
+                "Adb",
+                "PC客户端",
+                "PC客户端(Cursor)",
+                "PlayCover"
+            ],
+            "description": "在主线卡带地图内启动：自动推进剧情对话、点地面走位、确保自动战斗、点掉结算页与确认弹窗，循环不停。<br><b>注意：</b>需要自己先进入主线卡带；遇到必须手动解谜或选路、奖励弹窗点不掉时会停在原地，看一眼即可。"
+        },
         {
             "name": "多存档",
             "label": "⚙️ 多存档",
