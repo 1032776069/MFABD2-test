@@ -21,19 +21,20 @@
         ]
     },
     "Story_Result_Victory": {
-        "desc": "战斗结算-胜利，与 AutoBattle 模块共用识别点",
+        "desc": "战斗结算-胜利。ROI 按实测 VICTORY 文字位置（720p x905-1037）放宽，右边缘不再截断。",
         "recognition": "OCR",
         "roi": [
-            847,
-            12,
-            177,
-            86
+            860,
+            10,
+            230,
+            105
         ],
         "expected": [
             "VICTORY"
         ],
         "timeout": 2000,
         "next": [
+            "Story_Result_Leave",
             "Story_Result_Continue"
         ],
         "focus": "主线战斗结果-胜利"
@@ -53,17 +54,18 @@
         ],
         "timeout": 2000,
         "next": [
+            "Story_Result_Leave",
             "Story_Result_Continue"
         ],
         "focus": "主线战斗结果-失利"
     },
     "Story_Result_Continue": {
-        "desc": "结算页点画面中部继续。结算页任意位置可点，故用 DirectHit 兜底点击；点完若仍是结算页会再点一次。",
+        "desc": "结算页兜底：没认出「离开」二字时直接点按钮位置。原先点画面中央基本没反应，会一直空点。",
         "recognition": "DirectHit",
         "action": "Click",
         "target": [
-            640,
-            420,
+            1155,
+            650,
             1,
             1
         ],
@@ -325,5 +327,27 @@
             "Story_Talk_Advance"
         ],
         "focus": "剧情对话中-点F2跳过"
+    },
+    "Story_Result_Leave": {
+        "desc": "结算页右下角的「离开」按钮，左侧那个双箭头圆圈不是它（别点错成重试/下一关）。",
+        "recognition": "OCR",
+        "roi": [
+            1100,
+            620,
+            180,
+            80
+        ],
+        "expected": [
+            "离开"
+        ],
+        "action": "Click",
+        "post_delay": 2500,
+        "timeout": 2000,
+        "next": [
+            "Story_Result_Victory",
+            "Story_Result_Defeat",
+            "Story_Start"
+        ],
+        "focus": "结算页-点离开"
     }
 }
