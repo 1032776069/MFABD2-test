@@ -8387,6 +8387,10 @@
             "description": "非日常",
             "task": [
                 {
+                    "name": "[执行]主线剧情自动推进",
+                    "enabled": false
+                },
+                {
                     "name": "多存档",
                     "enabled": true
                 },
