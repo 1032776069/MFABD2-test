@@ -12,6 +12,7 @@
             "Story_Talk_Next_Alt",
             "Story_Talk_Skip",
             "Story_Talk_Advance",
+            "Story_Skip_Talk_Confirm",
             "Story_Msgbox_Confirm",
             "Story_Pack_Skip",
             "Story_Pack_Next",
@@ -179,7 +180,7 @@
             400,
             330,
             480,
-            200
+            230
         ],
         "expected": [
             "确认",
@@ -323,6 +324,7 @@
         "post_delay": 1500,
         "rate_limit": 8000,
         "next": [
+            "Story_Skip_Talk_Confirm",
             "Story_Msgbox_Confirm",
             "Story_Talk_Advance"
         ],
@@ -349,5 +351,32 @@
             "Story_Start"
         ],
         "focus": "结算页-点离开"
+    },
+    "Story_Skip_Talk_Confirm": {
+        "desc": "F2 跳过剧情后的二次确认框：标题「跳过对话」，说明「是否结束剧情观看？」，按钮 取消(ESC) / 确认(ENTER or SPACE)。识别标题后点「确认」(720p 696,524)，不要点左边的取消。",
+        "recognition": "OCR",
+        "roi": [
+            580,
+            190,
+            160,
+            45
+        ],
+        "expected": [
+            "跳过"
+        ],
+        "action": "Click",
+        "target": [
+            696,
+            524,
+            1,
+            1
+        ],
+        "post_delay": 2000,
+        "timeout": 2000,
+        "next": [
+            "Story_Msgbox_Confirm",
+            "Story_Start"
+        ],
+        "focus": "跳过对话-点确认"
     }
 }
