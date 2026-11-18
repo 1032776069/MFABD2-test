@@ -10,7 +10,8 @@
             "Story_Battle_Auto",
             "Story_Talk_Next",
             "Story_Talk_Next_Alt",
-            "Story_Talk_Text",
+            "Story_Talk_Skip",
+            "Story_Talk_Advance",
             "Story_Msgbox_Confirm",
             "Story_Pack_Skip",
             "Story_Pack_Next",
@@ -180,7 +181,8 @@
         ],
         "expected": [
             "确认",
-            "确定"
+            "确定",
+            "跳过"
         ],
         "action": "Click",
         "post_delay": 1500,
@@ -269,8 +271,8 @@
         ],
         "focus": "兜底点中央（走位/推进对话）"
     },
-    "Story_Talk_Text": {
-        "desc": "全屏剧情对话：底部对话框有整句文本（6 字以上）。点画面上部推进，避开对话框里的选项按钮。",
+    "Story_Talk_Advance": {
+        "desc": "全屏剧情对话兜底：跳过没生效时，点画面上部逐句推进（避开对话框里的选项按钮）。",
         "recognition": "OCR",
         "roi": [
             340,
@@ -291,9 +293,37 @@
         "pre_delay": 200,
         "post_delay": 900,
         "next": [
-            "Story_Talk_Text",
+            "Story_Talk_Advance",
             "Story_Start"
         ],
-        "focus": "剧情对话中（OCR）"
+        "focus": "剧情对话中-逐句推进"
+    },
+    "Story_Talk_Skip": {
+        "desc": "全屏剧情对话：右上角 F1/F2/F3 三个功能键，F2 是跳过。按钮中心实测在 720p 坐标 (1092,55)。rate_limit 兜住：跳过没反应时不刷屏，交给 Story_Talk_Advance 逐句点。跳过后通常会弹确认框，交给 Story_Msgbox_Confirm。",
+        "recognition": "OCR",
+        "roi": [
+            340,
+            545,
+            600,
+            150
+        ],
+        "expected": [
+            "^.{6,}$"
+        ],
+        "action": "Click",
+        "target": [
+            1092,
+            55,
+            1,
+            1
+        ],
+        "pre_delay": 200,
+        "post_delay": 1500,
+        "rate_limit": 8000,
+        "next": [
+            "Story_Msgbox_Confirm",
+            "Story_Talk_Advance"
+        ],
+        "focus": "剧情对话中-点F2跳过"
     }
 }
