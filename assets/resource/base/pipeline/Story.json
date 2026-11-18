@@ -72,7 +72,8 @@
             "Story_Result_Victory",
             "Story_Result_Defeat",
             "Story_Start"
-        ]
+        ],
+        "focus": "结算页-点继续"
     },
     "Story_Battle_Auto": {
         "desc": "自动战斗中：原地等待，直到出现结算。复用 AutoBattle 的「自动战斗中」识别点。",
@@ -99,7 +100,8 @@
         "next": [
             "Story_Battle_ToAuto_Tpl",
             "Story_Start"
-        ]
+        ],
+        "focus": "手动战斗-转自动"
     },
     "Story_Battle_ToAuto_Tpl": {
         "desc": "点顶部自动战斗图标（复用 AutoBattle 的模板）",
@@ -163,7 +165,8 @@
         "next": [
             "Story_Talk_Next_Alt",
             "Story_Start"
-        ]
+        ],
+        "focus": "推进剧情对话（备用箭头）"
     },
     "Story_Msgbox_Confirm": {
         "desc": "通用确认弹窗：结算确认、卡带提示、剧情分支确认等",
@@ -203,7 +206,8 @@
         "next": [
             "Story_Msgbox_Confirm",
             "Story_Start"
-        ]
+        ],
+        "focus": "卡带开头-跳过"
     },
     "Story_Pack_Next": {
         "desc": "卡带开头/场景转换时右上角的『下一步』箭头",
@@ -222,7 +226,8 @@
         "next": [
             "Story_Msgbox_Confirm",
             "Story_Start"
-        ]
+        ],
+        "focus": "卡带开头-下一步"
     },
     "Story_Quest_Tracker": {
         "desc": "点右侧『主线』任务追踪，尝试触发自动寻路/打开任务面板。rate_limit 拉长，避免一直戳追踪栏。",
@@ -265,6 +270,7 @@
             "Story_Talk_Next",
             "Story_Msgbox_Confirm",
             "Story_Idle_Tap"
-        ]
+        ],
+        "focus": "兜底点中央（走位/推进对话）"
     }
 }
