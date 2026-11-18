@@ -10,6 +10,7 @@
             "Story_Battle_Auto",
             "Story_Talk_Next",
             "Story_Talk_Next_Alt",
+            "Story_Talk_Text",
             "Story_Msgbox_Confirm",
             "Story_Pack_Skip",
             "Story_Pack_Next",
@@ -252,7 +253,7 @@
         "focus": "点主线任务追踪"
     },
     "Story_Idle_Tap": {
-        "desc": "兜底动作：点屏幕中央。在卡带地图上走位、推进气泡对话、关掉误开的面板都靠这一下。",
+        "desc": "兜底动作：点屏幕中央。地图走位、关掉误开的面板靠这一下。点完必须回 Story_Start 重走优先级表，否则会困在兜底循环里，主线追踪/卡带跳过/手动战斗这些节点再也不会被检查。",
         "recognition": "DirectHit",
         "action": "Click",
         "target": [
@@ -264,13 +265,35 @@
         "pre_delay": 200,
         "post_delay": 1200,
         "next": [
-            "Story_Result_Victory",
-            "Story_Result_Defeat",
-            "Story_Battle_Auto",
-            "Story_Talk_Next",
-            "Story_Msgbox_Confirm",
-            "Story_Idle_Tap"
+            "Story_Start"
         ],
         "focus": "兜底点中央（走位/推进对话）"
+    },
+    "Story_Talk_Text": {
+        "desc": "全屏剧情对话：底部对话框有整句文本（6 字以上）。点画面上部推进，避开对话框里的选项按钮。",
+        "recognition": "OCR",
+        "roi": [
+            340,
+            545,
+            600,
+            150
+        ],
+        "expected": [
+            "^.{6,}$"
+        ],
+        "action": "Click",
+        "target": [
+            640,
+            260,
+            1,
+            1
+        ],
+        "pre_delay": 200,
+        "post_delay": 900,
+        "next": [
+            "Story_Talk_Text",
+            "Story_Start"
+        ],
+        "focus": "剧情对话中（OCR）"
     }
 }
